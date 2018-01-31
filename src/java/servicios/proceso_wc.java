@@ -9,6 +9,7 @@ import datos.Cls_con;
 import dtos.BeneficiarioDTO;
 import dtos.CasaSalesianaDTO;
 import dtos.ColaboradorSalesianaDTO;
+import modelo.Lugar;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
+import modelo.ObraSalesiana;
 import modelo.TipoCol;
 
 /**
@@ -228,6 +230,67 @@ public class proceso_wc {
         }
         
         return colaboradoresSalesiana;
+    }
+    
+    
+    
+    //LUGAR LISTAR
+    @WebMethod(operationName = "listLugares")
+    @WebResult(name="lugares")
+    public List<Lugar> listLugares(){
+        List<Lugar> lugares = new ArrayList<>();
+        Cls_con obj = new Cls_con();
+        ResultSet rs = null;
+      String sql= " select  l.id_lug,l.id_obr,l.id_elug,l.nombre_lug,l.descripcion_lug,l.responsable_lug,l.direccion_lug,l.telefono_lug,l.coordenada_lug,l.estado_lug,os.denominacion_obr, cs.id_cas,cs.nombre_cas from tb_lugar l,tb_casasalesiana cs,tb_obrasalesiana os "
+				+" where l.id_obr=os.id_obr "
+				+" and cs.id_cas=os.id_cas and estado_lug=true order by 1,2,3";
+        
+        try {
+            rs = obj.Consulta(sql);
+            while(rs.next()){
+                Lugar objLugar = new Lugar(
+                rs.getString(1),
+                rs.getString(2),
+                rs.getString(3),
+                rs.getString(4),
+                rs.getString(5));
+                lugares.add(objLugar);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lugares;
+    }
+    
+    
+    //LISTAR OBRA SALESIANA
+    @WebMethod(operationName = "listObras")
+    @WebResult(name="obras")
+    public List<ObraSalesiana> listObras(){
+        List<ObraSalesiana> obras = new ArrayList<>();
+        Cls_con obj = new Cls_con();
+        ResultSet rs = null;
+    String sql = "Select obr.*, ca.nombre_cas, tobr.descripcion_tobr from tb_obraSalesiana obr ,tb_casasalesiana ca, tb_tipoobra tobr "
+                + " where estado_obr=true "
+                + " and  obr.id_cas = ca.id_cas "
+                + "  and  obr.id_tobr = tobr.id_tobr; ";
+        
+        try {
+            rs = obj.Consulta(sql);
+            while(rs.next()){
+                ObraSalesiana objObra = new ObraSalesiana(
+                rs.getString(1),
+                rs.getString(2),
+                rs.getString(3),
+                rs.getString(4),
+                rs.getString(5),
+                rs.getString(6));
+                obras.add(objObra);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return obras;
     }
     
 }
