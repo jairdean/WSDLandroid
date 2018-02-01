@@ -120,8 +120,11 @@ public class proceso_wc {
     }
     //descripcion_ben,numero_ben,id_lug
     @WebMethod(operationName = "insertarBeneficiario")
-    public int insertarBeneficiario(@WebParam(name = "descripcion")String descripcion, @WebParam(name = "numero_ben") int numero_ben,@WebParam(name = "id_lug") int id_lug){        
+    public int insertarBeneficiario(@WebParam(name = "descripcion")String descripcion, 
+            @WebParam(name = "numero_ben") int numero_ben,
+            @WebParam(name = "id_lug") int id_lug){        
         int n=0;
+        System.out.println(descripcion+numero_ben+id_lug);
         Cls_con obj = new Cls_con();
         String sql = "insert into tb_beneficiario (descripcion_ben,numero_ben,id_lug,id_eben,estado_ben) values ('"
 					+ descripcion
