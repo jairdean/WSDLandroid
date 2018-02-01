@@ -200,8 +200,82 @@ public class proceso_wc {
         return n;
     }
     
+       @WebMethod(operationName = "insertarColaborador")
+    public int insertarColaborador(@WebParam(name = "idlug")int idlug,
+            @WebParam(name = "cantcolabob")int cantcolabob,
+            @WebParam(name = "idTipoCol")int idTipoCol){
+        
+        int n=0;
+        Cls_con obj = new Cls_con();
+        System.out.println("insertarColaboradorxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" +idlug);
+        //Insertar el nombre y el estado = true
+        String sql = "insert into tb_colaborador (numero_col,id_lug,id_tcol,estado_col) values ("
+					+ cantcolabob + "," + idlug + "," + idTipoCol
+					+ ",true);";
+        String error="";
+        
+        try {
+            error=obj.Ejecutar(sql);
+            
+        } catch (Exception e) {
+            n=0;
+        }
+        
+        if(error.equals("Datos insertados")){
+            n = 1;
+        }else{
+            n=0;
+        }
+        return n;
+    }
     
     
+    
+    
+    
+    
+    
+     @WebMethod(operationName = "insertarLugar")
+    public int insertarLugar(@WebParam(name = "nombreLugar")String nombreLugar,
+            @WebParam(name = "descripcion")String descripcion,
+            @WebParam(name = "responsable")String responsable,
+            @WebParam(name = "direccion")String direccion,
+            @WebParam(name = "telefono")String telefono,
+            @WebParam(name = "idobra")int idobra){
+        
+        int n=0;
+        Cls_con obj = new Cls_con();
+        System.out.println("insertarColaboradorxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" +idobra+" "+nombreLugar);
+        //Insertar el nombre y el estado = true
+      String sql = "insert into tb_lugar (nombre_lug,descripcion_lug,responsable_lug,direccion_lug,telefono_lug,id_obr,id_elug,estado_lug) values ('"
+					+ nombreLugar
+					+ "','"
+					+ descripcion
+					+ "','"
+					+ responsable
+					+ "','"
+					+ direccion
+					+ "','"
+					+ telefono
+					+ "',"
+					+ idobra
+					+ ",1,true);";
+        String error="";
+        
+        try {
+            error=obj.Ejecutar(sql);
+            
+        } catch (Exception e) {
+            n=0;
+        }
+        
+        if(error.equals("Datos insertados")){
+            n = 1;
+        }else{
+            n=0;
+        }
+        return n;
+    }
     
      @WebMethod(operationName = "listColaboradores")
     @WebResult(name="colaboradoresSalesiana")

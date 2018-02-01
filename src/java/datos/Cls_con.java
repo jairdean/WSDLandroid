@@ -19,6 +19,7 @@ public class Cls_con {
 	private String user;
 	private String pwd;
 	private String cadena;
+        private String IPaqui="172.16.24.17";//IP APUNTA A LA MAQUINA VITUAL CENTOS 6 TESIS
         
         public String getDriver()
 	{
@@ -45,7 +46,7 @@ public class Cls_con {
             this.driver ="org.postgresql.Driver";
 		this.user="postgres";
 		this.pwd="postgres";
-		this.cadena="jdbc:postgresql://192.168.100.196:5432/20150820";	//IP APUNTA A LA MAQUINA VITUAL CENTOS 6
+		this.cadena="jdbc:postgresql://"+IPaqui+":5432/20150820";	
 		this.con=this.crearConexion();
 	}
 	
