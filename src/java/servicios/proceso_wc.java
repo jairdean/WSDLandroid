@@ -7,6 +7,7 @@ package servicios;
 
 import datos.Cls_con;
 import dtos.BeneficiarioDTO;
+import dtos.CasaDTO;
 import dtos.CasaSalesianaDTO;
 import modelo.ColaboradorSalesiana;
 import modelo.Lugar;
@@ -119,8 +120,7 @@ public class proceso_wc {
     }
     //descripcion_ben,numero_ben,id_lug
     @WebMethod(operationName = "insertarBeneficiario")
-    public int insertarBeneficiario(@WebParam(name = "descripcion")String descripcion, @WebParam(name = "numero_ben") int numero_ben,@WebParam(name = "id_lug") int id_lug){
-        
+    public int insertarBeneficiario(@WebParam(name = "descripcion")String descripcion, @WebParam(name = "numero_ben") int numero_ben,@WebParam(name = "id_lug") int id_lug){        
         int n=0;
         Cls_con obj = new Cls_con();
         String sql = "insert into tb_beneficiario (descripcion_ben,numero_ben,id_lug,id_eben,estado_ben) values ('"
@@ -177,7 +177,7 @@ public class proceso_wc {
         
         int n=0;
         Cls_con obj = new Cls_con();
-        
+        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxx" +descripcion);
         //Insertar el nombre y el estado = true
         String sql = "insert into tb_tipocolaborador (descripcion_tcol,estado_tcol) values ('"+ descripcion + "',true);";
         String error="";
@@ -194,7 +194,6 @@ public class proceso_wc {
         }else{
             n=0;
         }
-        
         return n;
     }
     
@@ -293,4 +292,75 @@ public class proceso_wc {
         return obras;
     }
     
+    
+    
+    
+    
+     @WebMethod(operationName = "listCasas")
+    @WebResult(name="casas")
+    public List<CasaDTO> listCasas(){
+        
+        List<CasaDTO> casas = new ArrayList<>();
+        Cls_con obj = new Cls_con();
+        ResultSet rs = null;
+        String sql = "Select * from tb_casasalesiana";
+        
+        try {
+            rs = obj.Consulta(sql);
+            while(rs.next()){
+                
+                CasaDTO casa = new CasaDTO(
+                rs.getInt(1),
+                rs.getString(2));
+                casas.add(casa);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return casas;
+    }
+    
+    
+    // i n s e r t a r INSERTAR SECCION
+    @WebMethod(operationName = "insertarCasaSalesiana")
+    public int insertarCasaSalesiana(@WebParam(name = "nombrecasa")String nombrecasa,
+            @WebParam(name = "dircasa")String dircasa,
+            @WebParam(name = "telcasa")String telcasa,
+            @WebParam(name = "directorcasa")String directorcasa,
+            @WebParam(name = "cortocasa")String cortocasa,
+            @WebParam(name = "correo")String correo){
+        
+        int n=0;
+        Cls_con obj = new Cls_con();
+        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxx" +nombrecasa);
+        //Insertar el nombre y el estado = true
+        String sql = "insert into tb_casasalesiana (nombre_cas,direccion_cas,telefono_cas,correo_cas,director_cas,nombrecorto_cas,estado_cas) values ('"
+					+ nombrecasa
+					+ "','"
+					+ dircasa
+					+ "','"
+					+ telcasa
+					+ "','"
+                                        + correo
+                                        + "','"
+					+ directorcasa
+					+ "','"
+					+ cortocasa + "',true);";
+        String error="";
+        
+        try {
+            error=obj.Ejecutar(sql);
+            
+        } catch (Exception e) {
+            n=0;
+        }
+        
+        if(error.equals("Datos insertados")){
+            n = 1;
+        }else{
+            n=0;
+        }
+        return n;
+    }
 }
