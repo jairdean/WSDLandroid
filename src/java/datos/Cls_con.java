@@ -9,7 +9,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 /**
  *
- * @author Jairo
+ * @author 
  */
 public class Cls_con {
     private Connection con;
@@ -45,7 +45,7 @@ public class Cls_con {
             this.driver ="org.postgresql.Driver";
 		this.user="postgres";
 		this.pwd="postgres";
-		this.cadena="jdbc:postgresql://172.16.24.17:5432/20150820";	
+		this.cadena="jdbc:postgresql://172.16.24.17:5432/20150820";	//IP APUNTA A LA MAQUINA VITUAL CENTOS 6
 		this.con=this.crearConexion();
 	}
 	

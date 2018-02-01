@@ -7,7 +7,7 @@ package dtos;
 
 /**
  *
- * @author EstJhonAlexanderCast
+ * @author 
  */
 public class BeneficiarioDTO {
     

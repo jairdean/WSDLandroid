@@ -8,7 +8,7 @@ package servicios;
 import datos.Cls_con;
 import dtos.BeneficiarioDTO;
 import dtos.CasaSalesianaDTO;
-import dtos.ColaboradorSalesianaDTO;
+import modelo.ColaboradorSalesiana;
 import modelo.Lugar;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import modelo.TipoCol;
 
 /**
  *
- * @author EstJhonAlexanderCast
+ * @author 
  */
 @WebService(serviceName = "proceso_wc",targetNamespace = "http://xmlns.jj.com/services/v1/ups")
 public class proceso_wc {
@@ -203,8 +203,8 @@ public class proceso_wc {
     
      @WebMethod(operationName = "listColaboradores")
     @WebResult(name="colaboradoresSalesiana")
-    public List<ColaboradorSalesianaDTO> listColaboradores(){
-        List<ColaboradorSalesianaDTO> colaboradoresSalesiana = new ArrayList<>();
+    public List<ColaboradorSalesiana> listColaboradores(){
+        List<ColaboradorSalesiana> colaboradoresSalesiana = new ArrayList<>();
         Cls_con obj = new Cls_con();
         ResultSet rs = null;
         String sql = "Select distinct tcol.*, lg.nombre_lug, ttcol.descripcion_tcol, lg.id_obr, obr.id_cas "
@@ -217,11 +217,11 @@ public class proceso_wc {
         try {
             rs = obj.Consulta(sql);
             while(rs.next()){
-                ColaboradorSalesianaDTO colab = new ColaboradorSalesianaDTO(
-                rs.getString(1),
-                rs.getString(2),
-                rs.getString(3),
-                rs.getString(4)
+                ColaboradorSalesiana colab = new ColaboradorSalesiana(
+                rs.getInt(3),
+                rs.getBoolean(2),
+                rs.getString(4),
+                rs.getString(6)
                 );
                 colaboradoresSalesiana.add(colab);
             }
